@@ -139,7 +139,7 @@
     this.attributes = {};
     this._escapedAttributes = {};
     this.cid = _.uniqueId('c');
-    this.set(attributes, {silent : true});
+    this.set(attributes, {silent : true, _init : true });
     this._changed = false;
     this._previousAttributes = _.clone(this.attributes);
     if (options && options.collection) this.collection = options.collection;
@@ -199,7 +199,7 @@
       var now = this.attributes, escaped = this._escapedAttributes;
 
       // Run validation.
-      if (!options.silent && this.validate && !this._performValidation(attrs, options)) return false;
+      if (!options._init && this.validate && !this._performValidation(attrs, options) && !options.silent ) return false;
 
       // Check for changes of `id`.
       if (this.idAttribute in attrs) this.id = attrs[this.idAttribute];
